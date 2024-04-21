@@ -24,7 +24,7 @@ apply_secrets() {
 }
 
 create_argo_apps() {
-    kubectl apply -f ./kind/argo-apps.yaml
+    kubectl apply -f ./bootstrap/argo-apps.yaml
     until kubectl wait application -n ${ARGOCD_NS} argo-apps --for jsonpath='{.status.sync.status}'=Synced; do sleep 1; done
 }
 
@@ -41,6 +41,7 @@ argo_ui() {
 create_kind_cluster
 install_argocd
 apply_secrets
+create_argo_apps
 argo_ui
 
 
