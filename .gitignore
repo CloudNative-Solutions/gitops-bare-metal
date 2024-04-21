@@ -1,0 +1,4 @@
+.envrc
+.vscode
+.DS_Store
+secrets/*
