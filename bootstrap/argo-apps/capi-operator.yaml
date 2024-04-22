@@ -1,0 +1,71 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: capi-operator
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  syncPolicy:
+    automated: {}
+    syncOptions:
+      - CreateNamespace=true
+  destination:
+    namespace: capi-operator-system
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    chart: cluster-api-operator
+    repoURL: https://kubernetes-sigs.github.io/cluster-api-operator
+    targetRevision: 0.9.2
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |-
+        cert-manager:
+          enabled: true
+        addon: helm
+        infrastructure: "packet:v0.8.0"
+        configSecret:
+          name: equinix-variables
+          namespace: default
+        manager:
+          featureGates:
+            core:
+              ClusterTopology: true
+              MachinePool: true
+  # This solves a bug where argo-cd will mark the application as healthy but OutOfSync
+  # this occurs because cert-manager updates the status field in the CRD. This field
+  # makes argo-cd diff's think it is out of sync.
+  ignoreDifferences:
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: addonproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: bootstrapproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: controlplaneproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: coreproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: infrastructureproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
+    - group: apiextensions.k8s.io
+      kind: CustomResourceDefinition
+      name: ipamproviders.operator.cluster.x-k8s.io
+      jsonPointers:
+        - /spec/conversion/webhook/clientConfig/caBundle
