@@ -10,7 +10,7 @@ spec:
   - clusters: {}
   template:
     metadata:
-      name: 'argo-cd'
+      name: '{{name}}-argo-cd'
       namespace: '{{name}}'
       annotations:
         argocd.argoproj.io/sync-wave: "-3"
