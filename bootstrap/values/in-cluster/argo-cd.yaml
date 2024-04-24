@@ -1,4 +1,12 @@
+applicationSet:
+    allowAnyNamespace: true
 configs:
+  params:
+    application.namespaces: "*"
+    # https://github.com/argoproj/argo-cd/issues/14903
+    # https://github.com/argoproj/argo-cd/pull/14914/files
+    applicationsetcontroller.namespaces: "*"
+    applicationsetcontroller.allowed.scm.providers: git@github.com:CloudNative-Solutions/gitops-bare-metal.git
   cm:
     ui.cssurl: https://cloudnativesolutions.ro/cns-branding/ArgoCD/CNS-style.css
     resource.customizations: |
