@@ -1,0 +1,26 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mgmt-cluster
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: default
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default
+  syncPolicy:
+    automated: {}
+  sources:
+  - repoURL: 'git@github.com:CloudNative-Solutions/gitops-bare-metal.git'
+    path: charts/packet-cluster
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+        - $values/bootstrap/mgmt-cluster.values.yaml
+  - ref: values
+    repoURL: 'git@github.com:CloudNative-Solutions/private-bare-metal.git'
+    targetRevision: HEAD
+
