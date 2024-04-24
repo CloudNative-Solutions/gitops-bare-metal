@@ -12,6 +12,14 @@ GitOps is a methodology for managing infrastructure and applications declarative
 - **ClusterAPI Manifests**: Manifests and configuration files for ClusterAPI to provision and manage Kubernetes clusters on bare metal infrastructure.
 - **Tinkerbell Workflow Templates**: Templates for Tinkerbell workflows used in the bare metal provisioning process.
 
+## Getting Started
+
+To get started, follow these steps:
+
+Clone this repository to your local machine.
+Customize the configurations according to your infrastructure requirements.
+Run [bootstrap.sh](bootstrap.sh) to deploy a Managment Cluster on Equinix Metal
+
 ## Acknowledgments
 
 This project is sponsored by **Equinix Metal**. We extend our thanks to **Equinix Metal** for their support and collaboration in making this project possible.
