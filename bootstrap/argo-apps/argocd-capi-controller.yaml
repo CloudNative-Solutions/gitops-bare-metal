@@ -17,4 +17,4 @@ spec:
   source:
     path: config/default
     repoURL: git@github.com:CloudNative-Solutions/argocd-capi-controller.git
-    targetRevision: v0.2.0
+    targetRevision: v0.3.0
