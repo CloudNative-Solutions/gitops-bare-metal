@@ -1,0 +1,32 @@
+---
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachineDeployment
+metadata:
+  labels:
+    cluster.x-k8s.io/cluster-name: {{ .Values.clusterName }}
+    pool: worker-a
+  name: {{ .Values.clusterName }}-worker-a
+spec:
+  clusterName: {{ .Values.clusterName }}
+  replicas: {{ .Values.worker.replicas }}
+  selector:
+    matchLabels:
+      cluster.x-k8s.io/cluster-name: {{ .Values.clusterName }}
+      pool: worker-a
+  template:
+    metadata:
+      labels:
+        cluster.x-k8s.io/cluster-name: {{ .Values.clusterName }}
+        pool: worker-a
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+          kind: KubeadmConfigTemplate
+          name: {{ .Values.clusterName }}-worker-a
+      clusterName: {{ .Values.clusterName }}
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: PacketMachineTemplate
+        name: {{ .Values.clusterName }}-worker-a
+      version: {{ .Values.kubernetesVersion }}

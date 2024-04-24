@@ -1,0 +1,9 @@
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: PacketCluster
+metadata:
+  name: {{ .Values.clusterName }}
+spec:
+  metro: {{ .Values.metro }}
+  projectID: {{ .Values.projectID }}
+  vipManager: CPEM

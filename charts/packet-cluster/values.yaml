@@ -1,0 +1,13 @@
+clusterName: mgmt-cluster
+kubernetesVersion: "v1.30.0"
+sshKeys: []
+projectID: ""
+metro: da
+controlPlane:
+  machineType: c3.small.x86
+  os: ubuntu_20_04
+  replicas: 1
+worker:
+  machineType: c3.small.x86
+  os: ubuntu_20_04
+  replicas: 0

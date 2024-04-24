@@ -1,0 +1,12 @@
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+kind: PacketMachineTemplate
+metadata:
+  name: {{ .Values.clusterName }}-worker-a
+spec:
+  template:
+    spec:
+      billingCycle: hourly
+      machineType: {{ .Values.worker.machineType }}
+      os: {{ .Values.worker.os }}
+      sshKeys: {{ .Values.sshKeys }}
