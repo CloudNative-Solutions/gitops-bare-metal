@@ -7,6 +7,10 @@ controlPlane:
   machineType: c3.small.x86
   os: ubuntu_20_04
   replicas: 1
+  taints:
+    - key: "node-role.kubernetes.io/control-plane"
+      value: "true"
+      effect: "NoSchedule"
 worker:
   machineType: c3.small.x86
   os: ubuntu_20_04

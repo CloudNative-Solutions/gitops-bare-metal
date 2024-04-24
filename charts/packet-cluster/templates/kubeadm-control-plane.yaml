@@ -14,7 +14,10 @@ spec:
           cloud-provider: external
     initConfiguration:
       nodeRegistration:
-        # taints: []
+        {{- with .Values.controlPlane.taints }}
+        taints: 
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         kubeletExtraArgs:
           cloud-provider: external
           provider-id: 'equinixmetal://{{ "{{ `{{ v1.instance_id }}` }}" }}'
