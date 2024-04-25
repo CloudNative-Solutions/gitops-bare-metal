@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ARGOCD_NS=argocd
-ARGO_CHART=argo-cd
+ARGO_CHART=in-cluster-argo-cd
 
 create_kind_cluster() {
     kind create cluster
@@ -12,7 +12,7 @@ install_argocd() {
     # Install ArgoCD with sync-waves enabled
     helm repo add argo-cd https://argoproj.github.io/argo-helm
     helm repo update
-    helm upgrade --install ${ARGO_CHART} --create-namespace --namespace ${ARGOCD_NS} -f bootstrap/argo-cd.yaml argo-cd/argo-cd
+    helm upgrade --install ${ARGO_CHART} --create-namespace --namespace ${ARGOCD_NS} -f bootstrap/values/in-cluster/argo-cd.yaml argo-cd/argo-cd
     echo "Waiting for ArgoCD deployment to be ready"
     until kubectl wait deployment -n ${ARGOCD_NS} ${ARGO_CHART}-argocd-server --for condition=Available=True --timeout=90s; do sleep 1; done
     until kubectl wait deployment -n ${ARGOCD_NS} ${ARGO_CHART}-argocd-applicationset-controller --for condition=Available=True --timeout=90s; do sleep 1; done
