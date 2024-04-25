@@ -16,7 +16,11 @@ spec:
       nodeRegistration:
         {{- with .Values.controlPlane.taints }}
         taints: 
+          {{- if . }}
           {{- toYaml . | nindent 10 }}
+          {{- else }}
+          []
+          {{- end }}
         {{- end }}
         kubeletExtraArgs:
           cloud-provider: external
