@@ -27,6 +27,8 @@ spec:
           enabled: true
         addon: helm
         infrastructure: "packet:v0.8.0"
+        bootstrap: "rke2"
+        controlPlane: "rke2"
         configSecret:
           name: equinix-variables
           namespace: default
